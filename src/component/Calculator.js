@@ -6,52 +6,49 @@ const Calculator = () => {
 
     const handleClick = (num) => {
         if (num === 'cs') setDisplay([])
-        else if (num === '=') {
-            if (display.includes('+') || display.includes('-') || display.includes('*') || display.includes('/')) {
-                try {
-                    // let pos = display.findIndex(elem => elem === '+'); // Because findIndex takes a function
-                    let pos;
-                    if (display.indexOf('+') !== -1) {
-                        pos = display.indexOf('+')
-                    }
-                    else if (display.indexOf('-') !== -1) {
-                        pos = display.indexOf('-')
-                    }
-                    else if (display.indexOf('*') !== -1) {
-                        pos = display.indexOf('*')
-                    }
-                    else if (display.indexOf('/') !== -1) {
-                        pos = display.indexOf('/')
-                    }
-                    console.log(pos)
-                    // let pos = display.indexOf('+')
-                    setSign(display[pos])
-                    let arr1 = display.slice(0, pos)
-                    let arr2 = display.slice(pos + 1,)
-                    let num1 = Number(arr1.join(''))
-                    let num2 = Number(arr2.join(''))
 
-                    switch (sign) {
-                        case '+':
-                            setDisplay(num1 + num2)
-                            break;
-                        case '-':
-                            setDisplay(num1 - num2)
-                            break;
-                        case '*':
-                            setDisplay(num1 * num2)
-                            break;
-                        case '/':
-                            setDisplay(num1 / num2)
-                            break;
-                        default:
-                            throw new Error('Invalid operator');
-                    }
-                    setSign('')
+        else if (num === '=') {
+            try {
+                // let pos = display.findIndex(elem => elem === '+'); // Because findIndex takes a function
+                let pos;
+                if (display.indexOf('+') !== -1) {
+                    pos = display.indexOf('+')
                 }
-                catch (error) {
-                    setDisplay("Error")
+                else if (display.indexOf('-') !== -1) {
+                    pos = display.indexOf('-')
                 }
+                else if (display.indexOf('*') !== -1) {
+                    pos = display.indexOf('*')
+                }
+                else if (display.indexOf('/') !== -1) {
+                    pos = display.indexOf('/')
+                }
+
+                /* Here Display Array is splitted into 2 part. 0 to Left of operator and Right of Operator to end. Then Both part is converted into number and then operation is Performed. */
+                let arr1 = display.slice(0, pos)
+                let arr2 = display.slice(pos + 1,)
+                let num1 = Number(arr1.join(''))
+                let num2 = Number(arr2.join(''))
+
+                switch (display[pos]) {
+                    case '+':
+                        setDisplay([num1 + num2])
+                        break;
+                    case '-':
+                        setDisplay([num1 - num2])
+                        break;
+                    case '*':
+                        setDisplay([num1 * num2])
+                        break;
+                    case '/':
+                        setDisplay([num1 / num2])
+                        break;
+                    default:
+                        throw new Error('Invalid operator');
+                }
+            }
+            catch (error) {
+                setDisplay(["Error"])
             }
 
         }
@@ -74,7 +71,7 @@ const Calculator = () => {
                             </div>
                             <div className="h-[60%] rounded-xl bg-yellow-900 p-5">
                                 <p className="text-white font-semibold text-2xl">
-                                    {String(display.join(''))}
+                                    {display}
                                 </p>
                             </div>
                         </div>
